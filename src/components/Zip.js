@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 
-function Zip(props) {
+export function Zip(props) {
 
     const [validationError, setValidationError] = useState(null);
 
     const validate = (event) => {
-        const zipCodePattern = /^\d{5}$/;
-        const valid = zipCodePattern.test(event.target.value);
+        const cityPattern = /[a-zA-Z]+/g;
+        const valid = cityPattern// true;  //cityPattern.test(event.target.value);
         if (!valid) {
-            setValidationError('* should be a 5 digit number only');
+            setValidationError('* should be a valid city name only');
             props.clearResponse();
         } else {
             setValidationError('');
@@ -26,21 +26,21 @@ function Zip(props) {
                         }
                     `}
                     </style>
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        id="usr" 
-                        placeholder="US Zip Code (5 digit)"
+                    <input
+                        type="text"
+                        className="form-control"
+                        id="usr"
+                        placeholder="NZ City:"
                         onKeyPress={(event) => {
                             if (event.key === "Enter") {
                                 validate(event);
                             }
                         }}
-                    ></input>   
+                    ></input>
                 </div>
             </div>
             <div className="pl-3 row">
-                <div className="text-danger small"> { validationError }</div>
+                <div className="text-danger small"> {validationError}</div>
             </div>
         </div>
     );

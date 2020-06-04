@@ -2,57 +2,57 @@
 
 module.exports = {
     '@disabled': false,  // This will prevent the test module from running.
-  
+
     after: (browser, done) => {
         console.log('After called')
-      browser
-        .closeWindow()
-        .end(done);
+        browser
+            .closeWindow()
+            .end(done);
     },
 
-    'Navigate to the DemoDOI - valid zip': async (browser) => {
+    'Navigate to the DemoDOI - valid City': async (browser) => {
         const demodoi = browser.page.demodoi();
         const { cityName } = demodoi.section;
-    
+
         await demodoi.navigate().waitForElementVisible('@inputText');
 
         await demodoi.setValue('@inputText', [
-            '78641',
+            'wellington',
             browser.Keys.ENTER
-          ]);
-    
+        ]);
+
         await demodoi.waitForElementVisible('@table');
 
-        cityName.expect.element('@firstApp').text.to.equal('Leander');
+        cityName.expect.element('@firstApp').text.to.equal('wellington');
     },
 
-    'Navigate to the DemoDOI - invalid zip': async (browser) => {
+    'Navigate to the DemoDOI - invalid city': async (browser) => {
         const demodoi = browser.page.demodoi();
-    
+
         await demodoi.navigate().waitForElementVisible('@inputText');
 
         await demodoi.setValue('@inputText', [
-            '90000',
+            'hamil',
             browser.Keys.ENTER
-          ]);
-    
+        ]);
+
         await demodoi.waitForElementNotPresent('@table');
 
         demodoi.expect.element('@cityNotFound').text.to.equal('city not found');
     },
 
-    'Navigate to the DemoDOI - invalid input': async (browser) => {
+    'Navigate to the DemoDOI - invalid city': async (browser) => {
         const demodoi = browser.page.demodoi();
-    
+
         await demodoi.navigate().waitForElementVisible('@inputText');
 
         await demodoi.setValue('@inputText', [
-            'ABCDE',
+            '..22/',
             browser.Keys.ENTER
-          ]);
-    
+        ]);
+
         await demodoi.waitForElementNotPresent('@table');
 
-        demodoi.expect.element('@invalidCity').text.to.equal('* should be a 5 digit number only');
+        demodoi.expect.element('@invalidCity').text.to.equal('* should be a valid city name only');
     },
 };
