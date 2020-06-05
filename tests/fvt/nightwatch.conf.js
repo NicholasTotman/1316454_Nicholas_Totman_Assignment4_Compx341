@@ -1,3 +1,4 @@
+
 if (!process.env.APP_URL) {
     console.log('APP_URL environment variable not defined');
     process.exit(1);

@@ -36,6 +36,12 @@ export function Zip(props) {
                                 validate(event);
                             }
                         }}
+                        onFocus={(event) => {
+                            if (event.target.value !== "") {
+                                validate(event);
+                            }
+
+                        }}
                     ></input>
                 </div>
             </div>

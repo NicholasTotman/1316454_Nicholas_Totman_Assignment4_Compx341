@@ -54,4 +54,26 @@ module.exports = {
 
         demodoi.expect.element('@invalidCity').text.to.equal('* should be a valid city name only');
     },
+    'Navigate to the DemoDOI - click event': async (browser) => {
+        const demodoi = browser.page.demodoi();
+
+        await demodoi.navigate().waitForElementVisible('@map');
+
+        await demodoi.click(document.getElementById("map.marker.Hamilton"))
+        
+        await demodoi.waitForElementNotPresent('@table');
+
+        cityName.expect.element('@firstApp').text.to.equal('Hamilton');
+    },
+    'Navigate to the DemoDOI - click empty text box': async (browser) => {
+        const demodoi = browser.page.demodoi();
+
+        await demodoi.navigate().waitForElementVisible('@inputText');
+
+        await demodoi.click('@inputText');
+
+        await demodoi.waitForElementVisible('@table', 1000);
+
+        cityName.expect.element('@table').visible.to.equal('false');
+    },
 };
